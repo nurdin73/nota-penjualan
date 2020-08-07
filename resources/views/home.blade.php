@@ -121,25 +121,23 @@
                         </div>
                         <div class="form-group">
                             <h6>List Items</h6>
-                            <div class="field-list">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="nama_barang">Nama Item</label>
-                                            <input type="text" name="nama_barang[]" class="form-control" required>
-                                        </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="nama_barang">Nama Item</label>
+                                        <input type="text" name="nama_barang[]" class="form-control" required>
                                     </div>
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <label for="qyt">Quantity</label>
-                                            <input type="number" name="qyt[]" class="form-control" required>
-                                        </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="qyt">Quantity</label>
+                                        <input type="number" name="qyt[]" class="form-control" required>
                                     </div>
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <label for="nilai">Nilai</label>
-                                            <input type="number" name="nilai[]" class="form-control" required>
-                                        </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label for="nilai">Nilai</label>
+                                        <input type="number" name="nilai[]" class="form-control" required>
                                     </div>
                                 </div>
                             </div>
@@ -168,45 +166,25 @@
                 <form id="formUpdate">
                     {{ csrf_field() }}
                     <div class="modal-body">
-                        <input type="hidden" name="id" id="id">
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="no_nota1">No Nota</label>
-                                    <input type="text" name="no_nota1" id="no_nota1" class="form-control">
+                                    <label for="member_id">Member ID</label>
+                                    <input type="text" name="member_id" id="member_id"  class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="tgl_penjualan1">Tanggal Penjualan</label>
-                                    <input type="date" name="tgl_penjualan1" id="tgl_penjualan1" class="form-control">
+                                    <label for="no_nota">No Nota</label>
+                                    <input type="text" name="no_nota" id="no_nota"  class="form-control" required>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="customer1">Code Customer</label>
-                            <input type="text" name="customer1" id="customer1" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="nama_barang1">Nama Barang</label>
-                            <input type="text" name="nama_barang1" id="nama_barang1" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="serial_number1">Serial Number</label>
-                            <input type="text" name="serial_number1" id="serial_number1" class="form-control">
-                        </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <label for="qyt1">Quantity</label>
-                                    <input type="number" name="qyt1" id="qyt1" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-8">
-                                <div class="form-group">
-                                    <label for="harga_barang1">Harga Barang</label>
-                                    <input type="number" name="harga_barang1" id="harga_barang1" class="form-control">
-                                </div>
+                            <h6>List Items</h6>
+                            <div class="field-list">
+                                
+                                
                             </div>
                         </div>
                     </div>
@@ -233,11 +211,11 @@
             getAllData : '{{ url('nota/get-all') }}',
             insertData : '{{ url('nota/add') }}',
             importData : '{{ url('nota/import') }}',
-            // detailData : '{{ url('nota/detail/') }}',
+            detailData : '{{ url('nota/get/') }}',
             deleteAll : '{{ url('nota/delete-all') }}',
             delDataByMemberId : '{{ url('nota/delete/') }}',
-            // updateData : '{{ url('nota/update') }}',
-            // exportNota : '{{ url('nota/export/') }}',
+            updateData : '{{ url('nota/update') }}',
+            exportNota : '{{ url('nota/export/') }}',
             exportNotaMultiple : '{{ url('nota/export-all') }}'
         }
     </script>
