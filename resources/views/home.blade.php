@@ -9,7 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <title>Export nota perpajakan</title>
+    <title>Export nota penjualan</title>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
   </head>
   <body>
@@ -91,6 +91,9 @@
             </table>
         </div>
     </div>
+
+    <div class="mb-4"></div>
+    <p class="text-center text-muted">Copyright telering.id &copy; {{ date('Y') }}</p>
 
     <!-- Modal Add -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
