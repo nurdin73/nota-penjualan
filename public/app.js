@@ -421,3 +421,21 @@ $('.expMultiple').on('click', function(e) {
         })
     }
 })
+
+$('#dataTable').on('click', 'tbody tr td .export-word',function(e) {
+    let id = $(this).data('id')
+    let nota = $(this).data('nota')
+    Swal.fire({
+        title: 'Apakah anda yakin?',
+        text: `Anda ingin export nota ${nota}?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya'
+    }).then(result => {
+        if(result.value) {
+            window.location.href = URL_LIST.exportNotaToWord + "/" + id
+        }
+    })
+})

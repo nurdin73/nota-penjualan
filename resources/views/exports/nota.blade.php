@@ -36,9 +36,9 @@
             <th></th>
         </tr>
         <tr>
-            <th colspan="2">NAMA BARANG</th>
-            <th align="right">QYT</th>
-            <th align="right">NILAI</th>
+            <th colspan="2" style="font-weight: bold">NAMA BARANG</th>
+            <th align="right" style="font-weight: bold">QYT</th>
+            <th align="right" style="font-weight: bold">NILAI</th>
         </tr>
         @foreach ($nota->items as $item)
         <tr>

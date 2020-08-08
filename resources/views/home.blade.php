@@ -219,7 +219,8 @@
             delDataByMemberId : '{{ url('nota/delete/') }}',
             updateData : '{{ url('nota/update') }}',
             exportNota : '{{ url('nota/export/') }}',
-            exportNotaMultiple : '{{ url('nota/export-all') }}'
+            exportNotaMultiple : '{{ url('nota/export-all') }}',
+            exportNotaToWord: '{{ url('nota/export-word/') }}'
         }
     </script>
     <script src="{{ asset('functions.js') }}"></script>

@@ -58,4 +58,5 @@ Route::group(['prefix' => 'nota'], function () {
     Route::post('/import', 'NotaController@import');
     Route::get('/export-all', 'NotaController@exportAll');
     Route::get('/export/{member_id}', 'NotaController@export');
+    Route::get('/export-word/{member_id}', 'NotaController@exportWord');
 });
