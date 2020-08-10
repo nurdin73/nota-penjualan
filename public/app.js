@@ -439,3 +439,34 @@ $('#dataTable').on('click', 'tbody tr td .export-word',function(e) {
         }
     })
 })
+
+$('.expWordMultiple').on('click', function(e) {
+    e.preventDefault()
+    var count = $('input:checkbox:checked').length
+    var checkVal = []
+    $('input:checkbox:checked').each(function() {
+        checkVal.push($(this).data('id'))
+    })
+    if(checkVal.length <= 0) {
+        const options = {
+            icon : 'error',
+            text: `Pilih data terlebih dahulu`,
+            title: 'Opps!'
+        }
+        alertMessage('alert', options);
+    } else {
+        Swal.fire({
+            title: 'Apakah anda yakin',
+            text: `Anda ingin mengexport ${count} nota?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya'
+        }).then(result => {
+            if(result.value) {
+                window.location.href = URL_LIST.exportNotaToWordMultiple + "?memberId=" + checkVal.join(",")
+            }
+        })
+    }
+})

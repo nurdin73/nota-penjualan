@@ -72,6 +72,7 @@
             <div class="btn-group" role="group" aria-label="Basic example">
                 <button type="button" class="btn btn-danger btn-sm delMultiple"><span class="count"></span>Delete</button>
                 <button type="button" class="btn btn-success btn-sm expMultiple"><span class="count"></span>Export Excel</button>
+                <button type="button" class="btn btn-primary btn-sm expWordMultiple"><span class="count"></span>Export Word</button>
             </div>
         </div> 
         <div class="table-responsive">
@@ -220,7 +221,8 @@
             updateData : '{{ url('nota/update') }}',
             exportNota : '{{ url('nota/export/') }}',
             exportNotaMultiple : '{{ url('nota/export-all') }}',
-            exportNotaToWord: '{{ url('nota/export-word/') }}'
+            exportNotaToWord: '{{ url('nota/export-word/') }}',
+            exportNotaToWordMultiple: '{{ url('nota/export-word-multiple') }}'
         }
     </script>
     <script src="{{ asset('functions.js') }}"></script>

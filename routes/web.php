@@ -59,4 +59,5 @@ Route::group(['prefix' => 'nota'], function () {
     Route::get('/export-all', 'NotaController@exportAll');
     Route::get('/export/{member_id}', 'NotaController@export');
     Route::get('/export-word/{member_id}', 'NotaController@exportWord');
+    Route::get('/export-word-multiple', 'NotaController@exportWordMultiple');
 });

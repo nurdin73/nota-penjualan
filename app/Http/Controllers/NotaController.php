@@ -306,43 +306,56 @@ class NotaController extends Controller
         $template->saveAs("php://output");
     }
 
-    public function exportWord2(Request $request)
+    public function exportWordMultiple(Request $request)
     {
-        $phpWord = new PhpWord();
-        $section = $phpWord->addSection([
-            'pageSizeW' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(2.95),
-            'pageSizeH' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(13.78),
-            'marginTop' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(0.39),
-            'marginLeft' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(0.3),
-            'marginRight' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(0.2),
-            'marginBottom' => \PhpOffice\PhpWord\Shared\Converter::inchToTwip(5.71),
-        ]);
-        for ($i=0; $i < 4; $i++) { 
-            $section->addText("PT. TELE RING DISTRINDO");
-            $section->addText("Jl. Wahid Hasyim Pertokoan Sindanglaut Blok A4 Dusun 01 RT005 RW001 Cipeujeuh Wetan Lemah Abang Kab Cirebon Jawa Barat");
-            $section->addText("NPWP 74.454.732.4-426.000");
-            $section->addTextBreak();
-            $section->addText("NOTA PENJUALAN   : 0001");
-            $section->addText("Member ID        : CS00001");
-            $section->addTextBreak();
-            $table = $section->addTable();
-            for ($row = 1; $row <= 8; $row++) { $table->addRow();
-                for ($cell = 1; $cell <= 3; $cell++) { $table->addCell(1750)->addText("{$row}{$cell}000");
-                }
+        $member_id = $request->memberId;
+        $result = DB::table('items')->whereIn('member_id', explode(',', $member_id))->get();
+        $data = [];
+        foreach ($result as $row) {
+            $sub_array = [];
+            $sub_array['member_id'] = $row->member_id;
+            $sub_array['nota'] = $row->no_nota;
+            $getTotal = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->sum('nilai');
+            $sub_array['total'] = number_format($getTotal, 0, ',', '.');
+            $sub_array['items'] = [];
+            $items = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->get();
+            foreach ($items as $i) {
+                $dataItems = [];
+                $dataItems['id'] = $i->id;
+                $dataItems['nama_barang'] = $i->nama_barang;
+                $dataItems['qyt'] = $i->qyt;
+                $dataItems['nilai'] = $i->nilai;
+                array_push($sub_array['items'], $dataItems);
             }
-            $section->addTextBreak();
-            $section->addText("TOTAL   : 2000");
-            $section->addPageBreak();
+            array_push($data, $sub_array);
         }
+        $data = Functions::ArrayDuplicateRemove($data, false);
+        $data = json_encode($data);
+        $data = json_decode($data);
+        $template = new TemplateProcessor(storage_path('template_multiple.docx'));
+        $filename = "";
+        $template->cloneBlock('clone', count($data), true, true);
+        $i = 1;
+        foreach ($data as $value) {
+            $template->setValue('total#'.$i, $value->total);
+            $template->setValue('nota#'.$i, $value->nota);
+            $template->setValue('member_id#'.$i, $value->member_id);
+            $template->cloneBlock('items#'.$i, count($value->items), true, true);
+            $z = 1;
+            foreach ($value->items as $items) {
+                $template->setValue('nama_barang#'.$i.'#'.$z, $items->nama_barang);
+                $template->setValue('qyt#'.$i.'#'.$z, $items->qyt);
+                $template->setValue('nilai#'.$i.'#'.$z, $items->nilai);
+                $z++;
+            }
+            $template->setValue('pageBreak#'.$i, '</w:t></w:r>'.'<w:r><w:br w:type="page"/></w:r>'
+            . '<w:r><w:t>');
+            $i++;
+        }
+        $filename = count($data) . ".". time() .".docx";
         
-        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
         header("Content-Type: aplication/octet-stream");
-        header("Content-Disposition: attachment; filename=tes.docx");
-        $objWriter->save("php://output");
-    }
-
-    public function exportWord3()
-    {
-        return view('exports.word');
+        header("Content-Disposition: attachment; filename=$filename");
+        $template->saveAs("php://output");
     }
 }
