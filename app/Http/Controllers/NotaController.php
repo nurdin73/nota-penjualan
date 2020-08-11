@@ -358,4 +358,30 @@ class NotaController extends Controller
         header("Content-Disposition: attachment; filename=$filename");
         $template->saveAs("php://output");
     }
+
+    public function getDataMultiple(Request $request)
+    {
+        $member_id = $request->memberId;
+        $result = DB::table('items')->whereIn('member_id', explode(',', $member_id))->get();
+        $data = [];
+        foreach ($result as $row) {
+            $sub_array = [];
+            $sub_array['member_id'] = $row->member_id;
+            $sub_array['nota'] = $row->no_nota;
+            $getTotal = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->sum('nilai');
+            $sub_array['items'] = [];
+            $items = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->get();
+            foreach ($items as $i) {
+                $dataItems = [];
+                $dataItems['id'] = $i->id;
+                $dataItems['nama_barang'] = $i->nama_barang;
+                $dataItems['qyt'] = $i->qyt;
+                $dataItems['nilai'] = $i->nilai;
+                array_push($sub_array['items'], $dataItems);
+            }
+            array_push($data, $sub_array);
+        }
+        $data = Functions::ArrayDuplicateRemove($data, false);
+        return response($data);
+    }
 }

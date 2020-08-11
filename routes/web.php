@@ -50,6 +50,7 @@ Route::get('detail/{member_id}', function ($member_id){
 
 Route::group(['prefix' => 'nota'], function () {
     Route::get('/get-all', 'NotaController@getAll');
+    Route::get('/get-nota-multiple', 'NotaController@getDataMultiple');
     Route::get('/get/{member_id}', 'NotaController@get');
     Route::delete('/delete-all', 'NotaController@destroyAll');
     Route::delete('/delete/{member_id}', 'NotaController@destroy');

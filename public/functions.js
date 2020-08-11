@@ -1,16 +1,43 @@
+Array.prototype.remove = function() {
+    var what, a = arguments, L = a.length, ax;
+    while (L && this.length) {
+        what = a[--L];
+        while ((ax = this.indexOf(what)) !== -1) {
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+};
+
 function check() {  
     $('#dataTable').on('change', 'tbody tr td .check',function (e) {  
         e.preventDefault()
+        // $('#countItems').html(items.length)
         var checked = $(this).is(':checked');
         var checkedData = $('input:checkbox:checked').length
+        var array = JSON.parse(localStorage.getItem('listMember'));
+        const memberId = $(this).data('id');
         if(checked) {
+            $('.floating').fadeIn()
             var parents = $($(this).parent().parent())
-            parents.css('background-color', '#ccc')
+            parents.css('background-color', '#ccc') 
+            const found = array.find(x => x == memberId);
+            if(!found) {
+                array.push(memberId)
+                localStorage.setItem('listMember', JSON.stringify(array));
+            }
         } else {
             var parents = $($(this).parent().parent())
             parents.css('background-color', '#fff')
+            array.remove(memberId)
+            localStorage.setItem('listMember', JSON.stringify(array));
         }
-
+        if(array.length > 0) {
+            $('.floating').fadeIn();
+        } else {
+            $('.floating').fadeOut()
+        }
+        const countItem = array.length > 0 ? $('#countItems').html(array.length) : $('#countItems').html(0)
         const countCeck = checkedData > 0 ? $('.count').html(`( ${checkedData} )`) : $('.count').html('( 0 )')
     })
 }
@@ -71,3 +98,31 @@ function validateFile() {
         return true
     })
 }
+
+function countItem() {  
+    const items = JSON.parse(localStorage.getItem('listMember'))
+    if(items.length > 0) {
+        $('.floating').fadeIn();
+        $('#countItems').html(items.length)
+    } else {
+        $('.check').prop('checked', false)
+        $('.check').parent().parent().css('background-color', '#fff')
+        $('.floating').fadeOut()
+    }
+}
+setInterval(() => {
+    countItem()
+}, 500);
+
+$('.fieldData').on('click', '.hapus', function(e) {
+    e.preventDefault()
+    const memberID = $(this).data('id')
+    const itemList = JSON.parse(localStorage.getItem('listMember'))
+    const found = itemList.find(x => x == memberID);
+    if(!found) {
+        console.log('ga ada');
+    } else {
+        itemList.remove(memberID)
+        localStorage.setItem('listMember', JSON.stringify(itemList));
+    }
+})

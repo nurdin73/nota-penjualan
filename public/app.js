@@ -183,13 +183,74 @@ $('#formImport').on('submit', function(e) {
     }
 })
 
-$('.delMultiple').on('click', function(e) {
+// ini untuk delete multiple
+
+// $('.delMultiple').on('click', function(e) {
+//     e.preventDefault()
+//     var count = $('input:checkbox:checked').length
+//     var checkVal = []
+//     $('input:checkbox:checked').each(function() {
+//         checkVal.push($(this).data('id'))
+//     })
+//     if(checkVal.length <= 0) {
+//         const options = {
+//             icon : 'error',
+//             text: `Pilih data terlebih dahulu`,
+//             title: 'Opps!'
+//         }
+//         alertMessage('alert', options);
+//     } else {
+//         Swal.fire({
+//             title: 'Apakah anda yakin?',
+//             text: `Anda ingin menghapus ${count} data secara permanen?`,
+//             icon: "warning",
+//             showCancelButton: true,
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             confirmButtonText: 'Ya'
+//         }).then(result => {
+//             if(result.value) {
+//                 $.ajax({
+//                     type: "delete",
+//                     url: URL_LIST.deleteAll,
+//                     data: {
+//                         listId : checkVal.join(",")
+//                     },
+//                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+//                     success: function (response) {
+//                         if(response.status) {
+//                             Swal.fire({
+//                                 title: "Berhasil!",
+//                                 text: response.message,
+//                                 icon: "success",
+//                                 allowOutsideClick: false
+//                             }).then(result => {
+//                                 if(result.value) {
+//                                     window.location.reload()
+//                                 }
+//                             })
+//                         } else {
+//                             Swal.fire({
+//                                 title: "Gagal!",
+//                                 text: response.message,
+//                                 icon: "error",
+//                                 allowOutsideClick: false
+//                             }).then(result => {
+//                                 if(result.value) {
+//                                     window.location.reload()
+//                                 }
+//                             })
+//                         }
+//                     }
+//                 });
+//             }
+//         })
+//     }
+// })
+
+$('.delMultiple1').on('click', function(e) {
     e.preventDefault()
-    var count = $('input:checkbox:checked').length
-    var checkVal = []
-    $('input:checkbox:checked').each(function() {
-        checkVal.push($(this).data('id'))
-    })
+    var checkVal = JSON.parse(localStorage.getItem('listMember'))
     if(checkVal.length <= 0) {
         const options = {
             icon : 'error',
@@ -200,7 +261,7 @@ $('.delMultiple').on('click', function(e) {
     } else {
         Swal.fire({
             title: 'Apakah anda yakin?',
-            text: `Anda ingin menghapus ${count} data secara permanen?`,
+            text: `Anda ingin menghapus ${checkVal.length} data secara permanen?`,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -391,13 +452,42 @@ $('#dataTable').on('click', 'tbody tr td .export',function(e) {
     })
 })
 
-$('.expMultiple').on('click', function(e) {
+// ini untuk export multiple
+
+// $('.expMultiple').on('click', function(e) {
+//     e.preventDefault()
+//     var count = $('input:checkbox:checked').length
+//     var checkVal = []
+//     $('input:checkbox:checked').each(function() {
+//         checkVal.push($(this).data('id'))
+//     })
+//     if(checkVal.length <= 0) {
+//         const options = {
+//             icon : 'error',
+//             text: `Pilih data terlebih dahulu`,
+//             title: 'Opps!'
+//         }
+//         alertMessage('alert', options);
+//     } else {
+//         Swal.fire({
+//             title: 'Apakah anda yakin',
+//             text: `Anda ingin mengexport ${count} nota?`,
+//             icon: "warning",
+//             showCancelButton: true,
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             confirmButtonText: 'Ya'
+//         }).then(result => {
+//             if(result.value) {
+//                 window.location.href = URL_LIST.exportNotaMultiple + "?memberId=" + checkVal.join(",")
+//             }
+//         })
+//     }
+// })
+
+$('.expMultiple1').on('click', function(e) {
     e.preventDefault()
-    var count = $('input:checkbox:checked').length
-    var checkVal = []
-    $('input:checkbox:checked').each(function() {
-        checkVal.push($(this).data('id'))
-    })
+    var checkVal = JSON.parse(localStorage.getItem('listMember'))
     if(checkVal.length <= 0) {
         const options = {
             icon : 'error',
@@ -408,7 +498,7 @@ $('.expMultiple').on('click', function(e) {
     } else {
         Swal.fire({
             title: 'Apakah anda yakin',
-            text: `Anda ingin mengexport ${count} nota?`,
+            text: `Anda ingin mengexport ${checkVal.length} nota?`,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -440,13 +530,39 @@ $('#dataTable').on('click', 'tbody tr td .export-word',function(e) {
     })
 })
 
-$('.expWordMultiple').on('click', function(e) {
+// $('.expWordMultiple').on('click', function(e) {
+//     e.preventDefault()
+//     var count = $('input:checkbox:checked').length
+//     var checkVal = []
+//     $('input:checkbox:checked').each(function() {
+//         checkVal.push($(this).data('id'))
+//     })
+//     if(checkVal.length <= 0) {
+//         const options = {
+//             icon : 'error',
+//             text: `Pilih data terlebih dahulu`,
+//             title: 'Opps!'
+//         }
+//         alertMessage('alert', options);
+//     } else {
+//         Swal.fire({
+//             title: 'Apakah anda yakin',
+//             text: `Anda ingin mengexport ${count} nota?`,
+//             icon: "warning",
+//             showCancelButton: true,
+//             confirmButtonColor: '#3085d6',
+//             cancelButtonColor: '#d33',
+//             confirmButtonText: 'Ya'
+//         }).then(result => {
+//             if(result.value) {
+//                 window.location.href = URL_LIST.exportNotaToWordMultiple + "?memberId=" + checkVal.join(",")
+//             }
+//         })
+//     }
+// })
+$('.expWordMultiple1').on('click', function(e) {
     e.preventDefault()
-    var count = $('input:checkbox:checked').length
-    var checkVal = []
-    $('input:checkbox:checked').each(function() {
-        checkVal.push($(this).data('id'))
-    })
+    var checkVal = JSON.parse(localStorage.getItem('listMember'))
     if(checkVal.length <= 0) {
         const options = {
             icon : 'error',
@@ -457,7 +573,7 @@ $('.expWordMultiple').on('click', function(e) {
     } else {
         Swal.fire({
             title: 'Apakah anda yakin',
-            text: `Anda ingin mengexport ${count} nota?`,
+            text: `Anda ingin mengexport ${checkVal.length} nota?`,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -469,4 +585,29 @@ $('.expWordMultiple').on('click', function(e) {
             }
         })
     }
+})
+
+$('.showList').on('click', function(e) {
+    $('.fieldData').empty()
+    e.preventDefault()
+    const getItemLocalStorage = JSON.parse(localStorage.getItem('listMember'));
+    $.ajax({
+        type: "get",
+        url: URL_LIST.getNotaMultiple,
+        data: {
+            memberId: getItemLocalStorage.join(",")
+        },
+        success: function (response) {
+            $.each(response, function (i, val) { 
+                $('.fieldData').append(`
+                <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+                    Nota ${val.nota}
+                    <button type="button" data-id="${val.member_id}" class="close hapus" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> 
+                `)
+            });
+        }
+    });
 })

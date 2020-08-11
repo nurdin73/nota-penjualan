@@ -11,6 +11,13 @@
 
     <title>Export nota penjualan</title>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+    <style>
+        .floating {
+            position: fixed;
+            bottom: 10px;
+            left: 30px;
+        }
+    </style>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -69,11 +76,11 @@
         </div>
         <div class="d-flex justify-content-between mb-2">
             <button class="btn btn-sm btn-primary" onclick="window.location.href = '{{ asset('import_template.xlsx') }}'">Download template</button>
-            <div class="btn-group" role="group" aria-label="Basic example">
+            {{-- <div class="btn-group" role="group" aria-label="Basic example">
                 <button type="button" class="btn btn-danger btn-sm delMultiple"><span class="count"></span>Delete</button>
                 <button type="button" class="btn btn-success btn-sm expMultiple"><span class="count"></span>Export Excel</button>
                 <button type="button" class="btn btn-primary btn-sm expWordMultiple"><span class="count"></span>Export Word</button>
-            </div>
+            </div> --}}
         </div> 
         <div class="table-responsive">
             <table class="table table-hover" id="dataTable">
@@ -95,6 +102,37 @@
 
     <div class="mb-4"></div>
     <p class="text-center text-muted">Copyright telering.id &copy; {{ date('Y') }}</p>
+
+    <div class="floating">
+        <div class="alert alert-info">
+            <strong id="countItems">0</strong> item telah dipilih. klik <a href="#" data-toggle="modal" class="showList" data-target="#listItem">disini</a> untuk melanjutkan! 
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="listItem" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Actions</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-outline-danger  btn-sm delMultiple1"><i class="fas fa-fw fa-trash"></i> hapus</button>
+                        <button type="button" class="btn btn-outline-success btn-sm expMultiple1"><i class="fas fa-fw fa-file-excel"></i> Export Excel</button>
+                        <button type="button" class="btn btn-outline-primary btn-sm expWordMultiple1"><i class="fas fa-fw fa-file-word"></i> Export Word</button>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="fieldData">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal Add -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -213,6 +251,7 @@
     <script>
         var URL_LIST = {
             getAllData : '{{ url('nota/get-all') }}',
+            getNotaMultiple : '{{ url('nota/get-nota-multiple') }}',
             insertData : '{{ url('nota/add') }}',
             importData : '{{ url('nota/import') }}',
             detailData : '{{ url('nota/get/') }}',
@@ -223,6 +262,10 @@
             exportNotaMultiple : '{{ url('nota/export-all') }}',
             exportNotaToWord: '{{ url('nota/export-word/') }}',
             exportNotaToWordMultiple: '{{ url('nota/export-word-multiple') }}'
+        }
+        var listMember = localStorage.getItem('listMember')
+        if(listMember == null) {
+            localStorage.setItem('listMember', "[]" );
         }
     </script>
     <script src="{{ asset('functions.js') }}"></script>
