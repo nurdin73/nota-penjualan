@@ -71,10 +71,10 @@ class NotaController extends Controller
                 ->addColumn('total', function ($row){
                     $row = json_encode($row);
                     $row = json_decode($row);
-                    $result = DB::select("SELECT SUM(nilai) AS total FROM items WHERE member_id='$row->member_id' AND no_nota='$row->no_nota'");
                     $totalHarga = 0;
+                    $result = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->get();
                     foreach ($result as $value) {
-                        $totalHarga = $value->total; 
+                        $totalHarga += $value->nilai;
                     }
                     return "Rp. ".number_format($totalHarga, 0, ',', '.');
                 })
