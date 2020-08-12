@@ -24,7 +24,7 @@ class NotaController extends Controller
     
     public function getAll()
     {
-        $results = DB::table('items')->get();
+        $results = DB::table('items')->orderBy('member_id', 'asc')->get();
         if($results) {
             $data = [];
             foreach ($results as $row) {
