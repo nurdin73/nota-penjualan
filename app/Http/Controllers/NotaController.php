@@ -71,7 +71,7 @@ class NotaController extends Controller
                 ->addColumn('total', function ($row){
                     $row = json_encode($row);
                     $row = json_decode($row);
-                    // $result = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->sum('nilai');
+                    $result = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->get();
                     // return "Rp. ".number_format($result, 0, ',', '.');
                     return "RP. 1000";
                 })
