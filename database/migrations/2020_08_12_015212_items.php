@@ -17,8 +17,10 @@ class Items extends Migration
             $table->bigIncrements('id');
             $table->string('member_id');
             $table->string('no_nota');
+            $table->string('nama_barang');
             $table->integer('qyt');
             $table->string('nilai');
+            $table->timestamps();
         });
     }
 
