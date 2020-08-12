@@ -68,14 +68,14 @@ class NotaController extends Controller
                     $items = count($row->items);
                     return $items;
                 })
-                // ->addColumn('total', function ($row){
-                //     $row = json_encode($row);
-                //     $row = json_decode($row);
-                //     $result = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->sum('nilai');
-                //     return "Rp. ".number_format($result, 0, ',', '.');
-                // })
+                ->addColumn('total', function ($row){
+                    $row = json_encode($row);
+                    $row = json_decode($row);
+                    $result = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->sum('nilai');
+                    return "Rp. ".number_format($result, 0, ',', '.');
+                })
                 // ->rawColumns(['checkbox', 'action', 'total_items', 'total'])
-                ->rawColumns(['checkbox', 'action', 'total_items'])
+                ->rawColumns(['checkbox', 'action', 'total_items', 'total'])
                 ->make(true);
         } else {
             return datatables()->of($results)->make(true);
