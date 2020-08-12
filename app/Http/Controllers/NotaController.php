@@ -72,7 +72,8 @@ class NotaController extends Controller
                     $row = json_encode($row);
                     $row = json_decode($row);
                     $result = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->sum('nilai');
-                    return "Rp. ".number_format($result, 0, ',', '.');
+                    // return "Rp. ".number_format($result, 0, ',', '.');
+                    return "RP. 1000";
                 })
                 // ->rawColumns(['checkbox', 'action', 'total_items', 'total'])
                 ->rawColumns(['checkbox', 'action', 'total_items', 'total'])
