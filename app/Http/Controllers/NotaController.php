@@ -71,12 +71,13 @@ class NotaController extends Controller
                 ->addColumn('total', function ($row){
                     $row = json_encode($row);
                     $row = json_decode($row);
-                    // $result = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->sum('nilai');
-                    $result = DB::select("select sum(total) as total from items where member_id=$row->member_id and no_nota=$row->no_nota");
-                    return "Rp. ".number_format($result, 0, ',', '.');
-                    // return "RP. 1000";
+                    $result = DB::select("SELECT SUM(nilai) AS total FROM items WHERE member_id='$row->member_id' AND no_nota='$row->no_nota'");
+                    $totalHarga = 0;
+                    foreach ($result as $value) {
+                        $totalHarga = $value->total; 
+                    }
+                    return "Rp. ".number_format($totalHarga, 0, ',', '.');
                 })
-                // ->rawColumns(['checkbox', 'action', 'total_items', 'total'])
                 ->rawColumns(['checkbox', 'action', 'total_items', 'total'])
                 ->make(true);
         } else {
