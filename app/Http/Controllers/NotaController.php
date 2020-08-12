@@ -62,12 +62,12 @@ class NotaController extends Controller
                     $checkbox = "<input type='checkbox' class='check' name='check' id='check' data-id='$id'>";
                     return $checkbox;
                 })
-                // ->addColumn('total_items', function ($row){
-                //     $row = json_encode($row);
-                //     $row = json_decode($row);
-                //     $items = count($row->items);
-                //     return $items;
-                // })
+                ->addColumn('total_items', function ($row){
+                    $row = json_encode($row);
+                    $row = json_decode($row);
+                    $items = count($row->items);
+                    return $items;
+                })
                 // ->addColumn('total', function ($row){
                 //     $row = json_encode($row);
                 //     $row = json_decode($row);
@@ -75,7 +75,7 @@ class NotaController extends Controller
                 //     return "Rp. ".number_format($result, 0, ',', '.');
                 // })
                 // ->rawColumns(['checkbox', 'action', 'total_items', 'total'])
-                ->rawColumns(['checkbox', 'action'])
+                ->rawColumns(['checkbox', 'action', 'total_items'])
                 ->make(true);
         } else {
             return datatables()->of($results)->make(true);
