@@ -25,61 +25,60 @@ class NotaController extends Controller
     public function getAll()
     {
         $results = DB::table('items')->get();
-        return datatables()->of($results)->make(true);
-        // if($results) {
-        //     $data = [];
-        //     foreach ($results as $row) {
-        //         $sub_array = [];
-        //         $sub_array['member_id'] = $row->member_id;
-        //         $sub_array['no_nota'] = $row->no_nota;
-        //         $sub_array['items'] = [];
-        //         $items = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->get();
-        //         foreach ($items as $i) {
-        //             $dataItems = [];
-        //             $dataItems['id'] = $i->id;
-        //             $dataItems['nama_barang'] = $i->nama_barang;
-        //             $dataItems['qyt'] = $i->qyt;
-        //             $dataItems['nilai'] = $i->nilai;
-        //             array_push($sub_array['items'], $dataItems);
-        //         }
-        //         array_push($data, $sub_array);
-        //         // array_push($data['items'], $items);
-        //     }
-        //     $data = Functions::ArrayDuplicateRemove($data, false);
-        //     // return response($data);
-        //     return datatables()->of($data)
-        //         ->addIndexColumn()
-        //         ->addColumn('action', function ($row){
-        //             $row = json_encode($row);
-        //             $row = json_decode($row);
-        //             $id = $row->member_id;
-        //             $btn = "<div class='btn-group' role='group' aria-label='Basic example'><button type='button' data-id='$id' class='btn btn-info btn-sm update' data-toggle='modal' data-target='#modalUpdate'>Update</button><button type='button' data-id='$id' data-nota='$row->no_nota' class='btn btn-danger btn-sm delete'>Delete</button><button type='button' data-id='$id' data-nota='$row->no_nota' class='btn btn-success btn-sm export'>Excel</button><button type='button' data-id='$id' data-nota='$row->no_nota' class='btn btn-primary btn-sm export-word'>Word</button></div>";
-        //             return $btn;
-        //         })
-        //         ->addColumn('checkbox', function ($row){
-        //             $row = json_encode($row);
-        //             $row = json_decode($row);
-        //             $id = $row->member_id;
-        //             $checkbox = "<input type='checkbox' class='check' name='check' id='check' data-id='$id'>";
-        //             return $checkbox;
-        //         })
-        //         ->addColumn('total_items', function ($row){
-        //             $row = json_encode($row);
-        //             $row = json_decode($row);
-        //             $items = count($row->items);
-        //             return $items;
-        //         })
-        //         ->addColumn('total', function ($row){
-        //             $row = json_encode($row);
-        //             $row = json_decode($row);
-        //             $result = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->sum('nilai');
-        //             return "Rp. ".number_format($result, 0, ',', '.');
-        //         })
-        //         ->rawColumns(['checkbox', 'action', 'total_items', 'total'])
-        //         ->make(true);
-        // } else {
-        //     return datatables()->of($results)->make(true);
-        // }
+        if($results) {
+            $data = [];
+            foreach ($results as $row) {
+                $sub_array = [];
+                $sub_array['member_id'] = $row->member_id;
+                $sub_array['no_nota'] = $row->no_nota;
+                $sub_array['items'] = [];
+                $items = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->get();
+                foreach ($items as $i) {
+                    $dataItems = [];
+                    $dataItems['id'] = $i->id;
+                    $dataItems['nama_barang'] = $i->nama_barang;
+                    $dataItems['qyt'] = $i->qyt;
+                    $dataItems['nilai'] = $i->nilai;
+                    array_push($sub_array['items'], $dataItems);
+                }
+                array_push($data, $sub_array);
+                // array_push($data['items'], $items);
+            }
+            $data = Functions::ArrayDuplicateRemove($data, false);
+            return response($data);
+            // return datatables()->of($data)
+            //     ->addIndexColumn()
+            //     ->addColumn('action', function ($row){
+            //         $row = json_encode($row);
+            //         $row = json_decode($row);
+            //         $id = $row->member_id;
+            //         $btn = "<div class='btn-group' role='group' aria-label='Basic example'><button type='button' data-id='$id' class='btn btn-info btn-sm update' data-toggle='modal' data-target='#modalUpdate'>Update</button><button type='button' data-id='$id' data-nota='$row->no_nota' class='btn btn-danger btn-sm delete'>Delete</button><button type='button' data-id='$id' data-nota='$row->no_nota' class='btn btn-success btn-sm export'>Excel</button><button type='button' data-id='$id' data-nota='$row->no_nota' class='btn btn-primary btn-sm export-word'>Word</button></div>";
+            //         return $btn;
+            //     })
+            //     ->addColumn('checkbox', function ($row){
+            //         $row = json_encode($row);
+            //         $row = json_decode($row);
+            //         $id = $row->member_id;
+            //         $checkbox = "<input type='checkbox' class='check' name='check' id='check' data-id='$id'>";
+            //         return $checkbox;
+            //     })
+            //     ->addColumn('total_items', function ($row){
+            //         $row = json_encode($row);
+            //         $row = json_decode($row);
+            //         $items = count($row->items);
+            //         return $items;
+            //     })
+            //     ->addColumn('total', function ($row){
+            //         $row = json_encode($row);
+            //         $row = json_decode($row);
+            //         $result = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->sum('nilai');
+            //         return "Rp. ".number_format($result, 0, ',', '.');
+            //     })
+            //     ->rawColumns(['checkbox', 'action', 'total_items', 'total'])
+            //     ->make(true);
+        } else {
+            return datatables()->of($results)->make(true);
+        }
     }
     
     public function get($member_id)
