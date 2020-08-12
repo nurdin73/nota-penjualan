@@ -55,13 +55,13 @@ class NotaController extends Controller
                     $btn = "<div class='btn-group' role='group' aria-label='Basic example'><button type='button' data-id='$id' class='btn btn-info btn-sm update' data-toggle='modal' data-target='#modalUpdate'>Update</button><button type='button' data-id='$id' data-nota='$row->no_nota' class='btn btn-danger btn-sm delete'>Delete</button><button type='button' data-id='$id' data-nota='$row->no_nota' class='btn btn-success btn-sm export'>Excel</button><button type='button' data-id='$id' data-nota='$row->no_nota' class='btn btn-primary btn-sm export-word'>Word</button></div>";
                     return $btn;
                 })
-                // ->addColumn('checkbox', function ($row){
-                //     $row = json_encode($row);
-                //     $row = json_decode($row);
-                //     $id = $row->member_id;
-                //     $checkbox = "<input type='checkbox' class='check' name='check' id='check' data-id='$id'>";
-                //     return $checkbox;
-                // })
+                ->addColumn('checkbox', function ($row){
+                    $row = json_encode($row);
+                    $row = json_decode($row);
+                    $id = $row->member_id;
+                    $checkbox = "<input type='checkbox' class='check' name='check' id='check' data-id='$id'>";
+                    return $checkbox;
+                })
                 // ->addColumn('total_items', function ($row){
                 //     $row = json_encode($row);
                 //     $row = json_decode($row);
@@ -75,7 +75,7 @@ class NotaController extends Controller
                 //     return "Rp. ".number_format($result, 0, ',', '.');
                 // })
                 // ->rawColumns(['checkbox', 'action', 'total_items', 'total'])
-                ->rawColumns(['action'])
+                ->rawColumns(['checkbox', 'action'])
                 ->make(true);
         } else {
             return datatables()->of($results)->make(true);
