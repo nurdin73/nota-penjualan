@@ -228,8 +228,12 @@ class NotaController extends Controller
             $sub_array = [];
             $sub_array['member_id'] = $row->member_id;
             $sub_array['no_nota'] = $row->no_nota;
-            $getTotal = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->sum('nilai');
-            $sub_array['total'] = "Rp. ".number_format($getTotal, 0, ',', '.');
+            $totalHarga = 0;
+            $result = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->get();
+            foreach ($result as $value) {
+                $totalHarga += $value->nilai;
+            }
+            $sub_array['total'] = "Rp. ".number_format($totalHarga, 0, ',', '.');
             $sub_array['items'] = [];
             $items = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->get();
             foreach ($items as $i) {
@@ -266,8 +270,12 @@ class NotaController extends Controller
             $sub_array['nama_barang'] = $row->nama_barang;
             $sub_array['qyt'] = $row->qyt;
             $sub_array['nilai'] = $row->nilai;
-            $getTotal = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->sum('nilai');
-            $data['total'] = "Rp. ".number_format($getTotal, 0, ',', '.');
+            $totalHarga = 0;
+            $result = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->get();
+            foreach ($result as $value) {
+                $totalHarga += $value->nilai;
+            }
+            $data['total'] = number_format($totalHarga, 0, ',', '.');
             array_push($data['items'], $sub_array);
         }
         $data = json_encode($data);
@@ -292,8 +300,12 @@ class NotaController extends Controller
             $sub_array['nama_barang'] = $row->nama_barang;
             $sub_array['qyt'] = $row->qyt;
             $sub_array['nilai'] = $row->nilai;
-            $getTotal = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->sum('nilai');
-            $data['total'] = number_format($getTotal, 0, ',', '.');
+            $totalHarga = 0;
+            $result1 = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->get();
+            foreach ($result1 as $value) {
+                $totalHarga += $value->nilai;
+            }
+            $data['total'] = number_format($totalHarga, 0, ',', '.');
             array_push($data['items'], $sub_array);
         }
         $data = json_encode($data);
@@ -319,8 +331,12 @@ class NotaController extends Controller
             $sub_array = [];
             $sub_array['member_id'] = $row->member_id;
             $sub_array['nota'] = $row->no_nota;
-            $getTotal = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->sum('nilai');
-            $sub_array['total'] = number_format($getTotal, 0, ',', '.');
+            $totalHarga = 0;
+            $result = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->get();
+            foreach ($result as $value) {
+                $totalHarga += $value->nilai;
+            }
+            $sub_array['total'] = number_format($totalHarga, 0, ',', '.');
             $sub_array['items'] = [];
             $items = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->get();
             foreach ($items as $i) {
@@ -372,7 +388,6 @@ class NotaController extends Controller
             $sub_array = [];
             $sub_array['member_id'] = $row->member_id;
             $sub_array['nota'] = $row->no_nota;
-            $getTotal = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->sum('nilai');
             $sub_array['items'] = [];
             $items = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->get();
             foreach ($items as $i) {
