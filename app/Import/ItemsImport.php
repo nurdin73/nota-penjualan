@@ -29,13 +29,19 @@ class ItemsImport implements ToCollection, WithHeadingRow, WithChunkReading, Sho
                 $no_nota = $row['no_nota'];
             }
             if($row['nama_barang'] != null) {
-                $nama_barang = $row['nama_barang'];
+                if($row['nama_barang'] != "nama barang") {
+                    $nama_barang = $row['nama_barang'];
+                }
             }
             if($row['qyt'] != null) {
-                $qyt = $row['qyt'];
+                if($row['qyt'] != "qyt") {
+                    $qyt = $row['qyt'];
+                }
             }
             if($row['nilai'] != null) {
-                $nilai = $row['nilai'];
+                if($row['nilai'] != "nilai") {
+                    $nilai = $row['nilai'];
+                }
             }
             if($nama_barang != "" && $qyt != 0 && $nilai != 0) {
                 DB::table('items')->insert([
