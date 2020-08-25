@@ -22,7 +22,7 @@ Route::get('/', function () {
 });
 
 Auth::routes([
-    'register' => true,
+    'register' => false,
     'verify' => false,
     'reset' => false
 ]);
