@@ -3,6 +3,8 @@ $(document).ready(function () {
     $('#dataTable').DataTable({
         "serverSide" : true,
         "prosessing" : true,
+        "deferRender": true,
+        "stateSave": true, 
         "ajax" : URL_LIST.getAllData,
         "columns" : [
             {data : 'checkbox', name: 'checkbox', orderable: false, searchable: false},
@@ -123,7 +125,7 @@ $('#formImport').on('submit', function(e) {
         alertMessage('alert', options)
     } else {
         Swal.fire({
-            text: "Anda ingin import file ini?",
+            text: "Pastikan file import sama seperti template yang sudah ditentukan!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
