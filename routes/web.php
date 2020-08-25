@@ -22,12 +22,15 @@ Route::get('/', function () {
 });
 
 Auth::routes([
-    'register' => false,
+    'register' => true,
     'verify' => false,
     'reset' => false
 ]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/offline', function (){
+//     return view('offline');
+// });
 
 Route::get('detail/{member_id}', function ($member_id){
     $result = DB::table('items')->where('member_id', $member_id)->get();
