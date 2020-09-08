@@ -585,7 +585,7 @@ $('.expWordMultiple1').on('click', function(e) {
             confirmButtonText: 'Ya'
         }).then(result => {
             if(result.value) {
-                localStorage.setItem('listMember', "[]");
+                localStorage.setItem('listMember', "[]"); 
                 window.location.href = URL_LIST.exportNotaToWordMultiple + "?memberId=" + checkVal.join(",")
             }
         })
