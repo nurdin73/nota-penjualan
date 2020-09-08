@@ -157,7 +157,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="no_nota">No Nota</label>
-                                    <input type="text" name="no_nota"  class="form-control" required>
+                                    <input type="text" name="no_nota" value="{{ $no_nota }}"  class="form-control" required readonly>
                                 </div>
                             </div>
                         </div>
@@ -248,6 +248,13 @@
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="https://kit.fontawesome.com/b10279cbf9.js" crossorigin="anonymous"></script>
+    {{-- <script>
+        navigator.serviceWorker.register('/sw.js').then(reg => {
+            console.log("service worker registration success with scope: ", reg.scope);
+        }).catch(err => {
+            console.log('ServiceWorker registration failed: ', err);
+        })
+    </script> --}}
     <script>
         var URL_LIST = {
             getAllData : '{{ url('nota/get-all') }}',
