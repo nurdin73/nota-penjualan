@@ -18,15 +18,19 @@ class ItemsImport implements ToCollection, WithHeadingRow, WithChunkReading, Sho
         Log::info('data '. json_encode($rows));
         $golongan = "";
         $no_nota = "";
+        $checkNotaCode = DB::table('items')->max('no_nota');
+        $urut = 1;
+        if($checkNotaCode !== null) {
+            $urut = (int)$checkNotaCode;
+        }
         foreach ($rows as $row) {
             $nama_barang = "";
             $qyt = 0;
             $nilai = 0;
             if($row['golongan'] != null) {
                 $golongan = $row['golongan'];
-            }
-            if($row['no_nota'] != null) {
-                $no_nota = $row['no_nota'];
+                $no_nota = sprintf("%05s", $urut);
+                $urut++;
             }
             if($row['nama_barang'] != null) {
                 if($row['nama_barang'] != "nama barang") {
