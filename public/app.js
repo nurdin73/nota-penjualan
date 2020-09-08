@@ -287,6 +287,7 @@ $('.delMultiple1').on('click', function(e) {
                                 allowOutsideClick: false
                             }).then(result => {
                                 if(result.value) {
+                                    localStorage.setItem('listMember', "[]");
                                     window.location.reload()
                                 }
                             })
@@ -508,6 +509,7 @@ $('.expMultiple1').on('click', function(e) {
             confirmButtonText: 'Ya'
         }).then(result => {
             if(result.value) {
+                localStorage.setItem('listMember', "[]");
                 window.location.href = URL_LIST.exportNotaMultiple + "?memberId=" + checkVal.join(",")
             }
         })
@@ -583,6 +585,7 @@ $('.expWordMultiple1').on('click', function(e) {
             confirmButtonText: 'Ya'
         }).then(result => {
             if(result.value) {
+                localStorage.setItem('listMember', "[]");
                 window.location.href = URL_LIST.exportNotaToWordMultiple + "?memberId=" + checkVal.join(",")
             }
         })
