@@ -124,6 +124,7 @@
                         <button type="button" class="btn btn-outline-danger  btn-sm delMultiple1"><i class="fas fa-fw fa-trash"></i> hapus</button>
                         <button type="button" class="btn btn-outline-success btn-sm expMultiple1"><i class="fas fa-fw fa-file-excel"></i> Export Excel</button>
                         <button type="button" class="btn btn-outline-primary btn-sm expWordMultiple1"><i class="fas fa-fw fa-file-word"></i> Export Word</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm printNota"><i class="fas fa-fw fa-file-word"></i> Print nota</button>
                     </div>
                     <div class="dropdown-divider"></div>
                     <div class="fieldData">
@@ -268,7 +269,8 @@
             exportNota : '{{ url('nota/export/') }}',
             exportNotaMultiple : '{{ url('nota/export-all') }}',
             exportNotaToWord: '{{ url('nota/export-word/') }}',
-            exportNotaToWordMultiple: '{{ url('nota/export-word-multiple') }}'
+            exportNotaToWordMultiple: '{{ url('nota/export-word-multiple') }}',
+            printNota: '{{ url('nota/print-nota') }}'
         }
         var listMember = localStorage.getItem('listMember')
         if(listMember == null) {

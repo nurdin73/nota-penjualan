@@ -233,4 +233,8 @@ return [
 
     ],
 
+    'os' => env('OS', 'windows'),
+    'connection' => env('CONNECTION', 'USB'),
+    'printer_name' => env('PRINTER_NAME', 'sample')
+
 ];

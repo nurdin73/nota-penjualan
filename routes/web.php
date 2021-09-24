@@ -17,17 +17,18 @@ use Maatwebsite\Excel\Facades\Excel;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@new');
+Route::post('/print-nota', 'NewNotaController@print')->name('printNotaNew');
+// Auth::routes([
+//     'register' => true,
+//     'verify' => false,
+//     'reset' => false
+// ]);
 
-Auth::routes([
-    'register' => false,
-    'verify' => false,
-    'reset' => false
-]);
-
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::group(['middleware' => 'auth'], function() {
+//     Route::get('/home', 'HomeController@new')->name('home');
+//     Route::post('/print-nota', 'NewNotaController@print')->name('printNotaNew');
+// });
 // Route::get('/offline', function (){
 //     return view('offline');
 // });
@@ -61,6 +62,7 @@ Route::group(['prefix' => 'nota'], function () {
     Route::put('/update', 'NotaController@update');
     Route::post('/import', 'NotaController@import');
     Route::get('/export-all', 'NotaController@exportAll');
+    Route::get('/print-nota', 'NotaController@printNota');
     Route::get('/export/{member_id}', 'NotaController@export');
     Route::get('/export-word/{member_id}', 'NotaController@exportWord');
     Route::get('/export-word-multiple', 'NotaController@exportWordMultiple');

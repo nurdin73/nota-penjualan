@@ -14,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -29,5 +29,10 @@ class HomeController extends Controller
         $urutan++;
         $data['no_nota'] = sprintf("%05s", $urutan);
         return view('home', $data);
+    }
+
+    public function new()
+    {
+        return view('home-new');
     }
 }

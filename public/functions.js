@@ -66,7 +66,7 @@ function alertMessage(type = '', {icon = 'success', title = '', text = ''}, data
         })
     }
 }
-
+validateFile()
 function validateFile() {  
     $('#file_excel').change(function (e) {  
         e.preventDefault()

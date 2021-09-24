@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Exports\NotaExport;
 use App\Exports\NotaMultipleExport;
 use App\Http\Helpers\Functions;
+use App\Http\Helpers\PrintTrx;
 use App\Import\ItemsImport;
 use App\Jobs\ImportNotaJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
@@ -24,7 +26,9 @@ class NotaController extends Controller
     
     public function getAll()
     {
-        $results = DB::table('items')->orderBy('member_id', 'asc')->get();
+        $results = cache()->remember('get-all', 60, function() {
+            return DB::table('items')->orderBy('member_id', 'asc')->get();
+        });
         if($results) {
             $data = [];
             foreach ($results as $row) {
@@ -252,6 +256,42 @@ class NotaController extends Controller
         $data = json_decode($data);
         $filename = "export-nota-".count($data).".xlsx";
         return Excel::download(new NotaMultipleExport($data), $filename);
+    }
+    public function printNota(Request $request)
+    {
+        $member_id = $request->memberId;
+        $result = DB::table('items')->whereIn('member_id', explode(',', $member_id))->get();
+        $data = [];
+        foreach ($result as $row) {
+            $sub_array = [];
+            $sub_array['member_id'] = $row->member_id;
+            $sub_array['no_nota'] = $row->no_nota;
+            $totalHarga = 0;
+            $result = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->get();
+            foreach ($result as $value) {
+                $totalHarga += $value->nilai;
+            }
+            $sub_array['total'] = "Rp. ".number_format($totalHarga, 0, ',', '.');
+            $sub_array['items'] = [];
+            $items = DB::table('items')->where(['member_id' => $row->member_id, 'no_nota' => $row->no_nota])->get();
+            foreach ($items as $i) {
+                $dataItems = [];
+                $dataItems['id'] = $i->id;
+                $dataItems['nama_barang'] = $i->nama_barang;
+                $dataItems['qyt'] = $i->qyt;
+                $dataItems['nilai'] = $i->nilai;
+                array_push($sub_array['items'], $dataItems);
+            }
+            array_push($data, $sub_array);
+            // array_push($data['items'], $items);
+        }
+        $data = Functions::ArrayDuplicateRemove($data, false);
+        $data = json_encode($data);
+        $data = json_decode($data);
+        $printTrx = new PrintTrx($data);
+        $printTrx->invoice();
+
+        return redirect(url('home'));
     }
 
     public function export($member_id)

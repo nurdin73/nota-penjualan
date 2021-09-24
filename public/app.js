@@ -591,6 +591,33 @@ $('.expWordMultiple1').on('click', function(e) {
         })
     }
 })
+$('.printNota').on('click', function(e) {
+    e.preventDefault()
+    var checkVal = JSON.parse(localStorage.getItem('listMember'))
+    if(checkVal.length <= 0) {
+        const options = {
+            icon : 'error',
+            text: `Pilih data terlebih dahulu`,
+            title: 'Opps!'
+        }
+        alertMessage('alert', options);
+    } else {
+        Swal.fire({
+            title: 'Apakah anda yakin',
+            text: `Anda ingin mengexport ${checkVal.length} nota?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya'
+        }).then(result => {
+            if(result.value) {
+                localStorage.setItem('listMember', "[]"); 
+                window.location.href = URL_LIST.printNota + "?memberId=" + checkVal.join(",")
+            }
+        })
+    }
+})
 
 $('.showList').on('click', function(e) {
     $('.fieldData').empty()

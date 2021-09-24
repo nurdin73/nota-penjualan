@@ -22,10 +22,12 @@ class ImportJob implements ShouldQueue
      * @return void
      */
     protected $file;
+    protected $import;
 
-    public function __construct($file)
+    public function __construct($import, $file)
     {
         $this->file = $file;
+        $this->import = $import;
     }
 
     /**
@@ -35,8 +37,6 @@ class ImportJob implements ShouldQueue
      */
     public function handle()
     {
-        $fileLocation = "storage/". $this->file;
-        Excel::import(new ItemsImport, $fileLocation);
-        // Storage::delete('public/'.$this->file);
+        Excel::import($this->import, $this->file);
     }
 }
